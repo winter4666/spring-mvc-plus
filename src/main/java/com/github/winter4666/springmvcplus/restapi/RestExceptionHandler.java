@@ -17,7 +17,6 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import com.github.winter4666.springmvcplus.exception.BusinessException;
-import com.github.winter4666.springmvcplus.restapi.APIResult;
 
 @ControllerAdvice
 public class RestExceptionHandler extends ResponseEntityExceptionHandler {
@@ -29,26 +28,6 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
 	@Override
 	protected ResponseEntity<Object> handleExceptionInternal(Exception ex, Object body, HttpHeaders headers,
-		HttpStatus status, WebRequest request) {
-		return handleSystemException(ex, status, request);
-	}
-	
-	@ExceptionHandler(value={
-			BusinessException.class
-		})
-	public ResponseEntity<Object> handleBusinessException(Exception ex, WebRequest request) {
-		APIResult<?> apiResult = APIResult.fail(((BusinessException)ex).getRetCode()).msg(ex.getMessage());;
-	    return new ResponseEntity<Object>(apiResult, HttpStatus.OK);
-	}
-	
-	@ExceptionHandler(value={
-			Exception.class
-		})
-	public ResponseEntity<Object> handleUnknownException(Exception ex, WebRequest request) {
-	    return handleSystemException(ex, HttpStatus.INTERNAL_SERVER_ERROR, request);
-	}
-	
-	private ResponseEntity<Object> handleSystemException(Exception ex,
 		HttpStatus status, WebRequest request) {
     	//获取请求的url参数
 		StringBuilder mapStr = new StringBuilder();
@@ -67,6 +46,22 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
     	APIResult<?> apiResult = APIResult.fail(ex.getMessage());
 	    return new ResponseEntity<Object>(apiResult, status);
 	}
+	
+	@ExceptionHandler(value={
+			BusinessException.class
+		})
+	public ResponseEntity<Object> handleBusinessException(Exception ex, WebRequest request) {
+		APIResult<?> apiResult = APIResult.fail(((BusinessException)ex).getRetCode()).msg(ex.getMessage());;
+	    return new ResponseEntity<Object>(apiResult, HttpStatus.OK);
+	}
+	
+	@ExceptionHandler(value={
+			Exception.class
+		})
+	public ResponseEntity<Object> handleUnknownException(Exception ex, WebRequest request) {
+	    return handleExceptionInternal(ex, null, new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR, request);
+	}
+	
 	
 	
 	
