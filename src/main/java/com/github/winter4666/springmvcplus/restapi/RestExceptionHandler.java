@@ -18,6 +18,10 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 import com.github.winter4666.springmvcplus.exception.BusinessException;
 
+/**
+ * spring mvc全局异常处理，所有错误以json字符串的形式输出
+ * @author wutian
+ */
 @ControllerAdvice
 public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 	

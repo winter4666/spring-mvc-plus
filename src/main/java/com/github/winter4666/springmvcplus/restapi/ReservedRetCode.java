@@ -1,7 +1,7 @@
 package com.github.winter4666.springmvcplus.restapi;
 
 /**
- * 系统保留返回码，分别对应接口调用成功和通用的失败
+ * 保留返回码，分别对应接口调用成功和通用的失败
  * @author wutian
  */
 public enum ReservedRetCode implements RetCode {
