@@ -13,23 +13,39 @@ public class BusinessException extends RuntimeException {
 	
 	private RetCode retCode;
 	
-	public BusinessException(String msg) {
-		super(msg);
-		this.retCode = ReservedRetCode.FAIL;
-	}
+	private String msg;
 	
-	public BusinessException(RetCode retCode) {
-		super(retCode.msg());
+	private Object data;
+	
+	public BusinessException(RetCode retCode,String msg,Object data) {
+		super(msg);
 		this.retCode = retCode;
+		this.msg = msg;
+		this.data = data;
 	}
 	
 	public BusinessException(RetCode retCode,String msg) {
-		super(msg);
-		this.retCode = retCode;
+		this(retCode, msg, null);
+	}
+	
+	public BusinessException(RetCode retCode) {
+		this(retCode,retCode.msg());
+	}
+	
+	public BusinessException(String msg) {
+		this(ReservedRetCode.FAIL, msg);
 	}
 
 	public RetCode getRetCode() {
 		return retCode;
 	}
-
+	
+	public String getMsg() {
+		return msg;
+	}
+	
+	public Object getData() {
+		return data;
+	}
+	
 }

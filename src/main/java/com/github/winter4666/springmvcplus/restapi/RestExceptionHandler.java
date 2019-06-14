@@ -55,7 +55,8 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 			BusinessException.class
 		})
 	public ResponseEntity<Object> handleBusinessException(Exception ex, WebRequest request) {
-		APIResult<?> apiResult = APIResult.fail(((BusinessException)ex).getRetCode()).msg(ex.getMessage());;
+		BusinessException be = (BusinessException)ex;
+		APIResult<?> apiResult = APIResult.fail(be.getRetCode(),be.getData()).msg(be.getMsg());
 	    return new ResponseEntity<Object>(apiResult, HttpStatus.OK);
 	}
 	

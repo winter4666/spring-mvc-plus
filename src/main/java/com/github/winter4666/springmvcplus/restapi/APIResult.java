@@ -41,29 +41,6 @@ public class APIResult<T> {
     }
     
     /**
-     * 接口调用失败
-     * @return
-     */
-    public static APIResult<?> fail() {
-    	APIResult<?> apiResult = new APIResult<>();
-    	apiResult.code = ReservedRetCode.FAIL.code();
-    	apiResult.msg = ReservedRetCode.FAIL.msg();
-    	return apiResult;
-    }
-    
-    /**
-     * 接口调用失败，自定义返回信息
-     * @param msg
-     * @return
-     */
-    public static APIResult<?> fail(String msg) {
-    	APIResult<?> apiResult = new APIResult<>();
-    	apiResult.code = ReservedRetCode.FAIL.code();
-    	apiResult.msg = msg;
-    	return apiResult;
-    }
-    
-    /**
      * 接口调用失败，自定义返回码
      * @param retCode
      * @return
@@ -76,22 +53,49 @@ public class APIResult<T> {
     }
     
     /**
+     * 接口调用失败，自定义错误信息
+     * @param msg
+     * @return
+     */
+    public static APIResult<?> fail(String msg) {
+    	APIResult<?> apiResult = new APIResult<>();
+    	apiResult.code = ReservedRetCode.FAIL.code();
+    	apiResult.msg = msg;
+    	return apiResult;
+    }
+    
+    
+    /**
+     * 接口调用失败，可以返回数据
+     * @param msg
+     * @return
+     */
+    public static <T> APIResult<T> fail(RetCode retCode,T data) {
+    	APIResult<T> apiResult = new APIResult<>();
+    	apiResult.code = retCode.code();
+    	apiResult.msg = retCode.msg();
+    	apiResult.data = data;
+    	return apiResult;
+    }
+    
+    /**
+     * 接口调用失败
+     * @return
+     */
+    public static APIResult<?> fail() {
+    	APIResult<?> apiResult = new APIResult<>();
+    	apiResult.code = ReservedRetCode.FAIL.code();
+    	apiResult.msg = ReservedRetCode.FAIL.msg();
+    	return apiResult;
+    }
+    
+    /**
      * 设置msg字段
      * @param msg
      * @return
      */
     public APIResult<?> msg(String msg) {
     	this.msg = msg;
-    	return this;
-    }
-    
-    /**
-     * 设置data字段
-     * @param data
-     * @return
-     */
-    public APIResult<T> data(T data) {
-    	this.data = data;
     	return this;
     }
 
