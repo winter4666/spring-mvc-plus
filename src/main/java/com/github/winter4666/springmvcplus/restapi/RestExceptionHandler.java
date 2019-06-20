@@ -46,7 +46,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 			String[] value = (String[])entry.getValue();
 			mapStr.append(entry.getKey() + ":" + (value.length <= 0 ? "null" : value.length <= 1 ? value[0] : Arrays.toString(value)));
 		}
-    	logger.error("visit " + httpServletRequest.getRequestURL() + " error,param=" + mapStr.toString(), ex);
+    	logger.error("visit " + httpServletRequest.getRequestURL() + " error, referer=" + httpServletRequest.getHeader("referer") + ", param=" + mapStr.toString(), ex);
     	APIResult<?> apiResult = APIResult.fail(ex.getMessage());
 	    return new ResponseEntity<Object>(apiResult, status);
 	}
