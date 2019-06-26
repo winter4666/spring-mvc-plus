@@ -2,6 +2,9 @@ package com.github.winter4666.springmvcplus.utils;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
+
 public class PowerRequest {
 	
 	private HttpServletRequest request;
@@ -12,6 +15,20 @@ public class PowerRequest {
 	
 	public static PowerRequest wrap(HttpServletRequest request) {
 		return new PowerRequest(request);
+	}
+	
+	/**
+	 * 从上下文中获取PowerRequest
+	 * @return
+	 * @see org.springframework.web.context.request.ServletRequestAttributes#getRequest() 
+	 */
+	public static PowerRequest getInstanceFromContext() {
+		HttpServletRequest request = ((ServletRequestAttributes)RequestContextHolder.getRequestAttributes()).getRequest();
+		return new PowerRequest(request);
+	}
+	
+	public HttpServletRequest getRequest() {
+		return request;
 	}
 	
 	/**
