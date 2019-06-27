@@ -11,12 +11,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.context.request.ServletWebRequest;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+/**
+ * 增强版{@linkplain javax.servlet.http.HttpServletResponse response}
+ * @author wutian
+ */
 public class PowerResponse {
 	
 	private static ObjectMapper objectMapper;
@@ -58,7 +61,7 @@ public class PowerResponse {
 	 * @throws UnsupportedEncodingException 
 	 */
 	public void setFileName(String fileName) throws UnsupportedEncodingException {
-	    HttpServletRequest request = ((ServletRequestAttributes)RequestContextHolder.getRequestAttributes()).getRequest();  
+	    HttpServletRequest request = PowerRequest.getInstanceFromContext().getRequest();  
 	    String userAgent = request.getHeader("User-Agent");  
         if (userAgent.contains("MSIE") || userAgent.contains("Trident")) {
         	//针对IE或者以IE为内核的浏览器：  
@@ -91,7 +94,7 @@ public class PowerResponse {
 			out.write(bytes);
 		} finally {
 			if(out != null) {
-				out.close();
+				out.flush();
 			}
 		}
 	}
@@ -115,7 +118,7 @@ public class PowerResponse {
 	        }
 		} finally {
 			if(out != null) {
-				out.close();
+				out.flush();
 			}
 		}
 	}
@@ -147,7 +150,7 @@ public class PowerResponse {
 			writer.write(str);
 		} finally {
 			if(writer != null) {
-				writer.close();
+				writer.flush();
 			}
 		}
 	}

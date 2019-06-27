@@ -5,6 +5,10 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
+/**
+ * 增强版{@linkplain javax.servlet.http.HttpServletRequest request}
+ * @author wutian
+ */
 public class PowerRequest {
 	
 	private HttpServletRequest request;
