@@ -10,9 +10,6 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletWebRequest;
-
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -38,16 +35,6 @@ public class PowerResponse {
 	}
 	
 	public static PowerResponse wrap(HttpServletResponse response) {
-		return new PowerResponse(response);
-	}
-	
-	/**
-	 * 从上下文中获取对象
-	 * @return
-	 * @see org.springframework.web.context.request.ServletWebRequest#getResponse()
-	 */
-	public static PowerResponse getInstanceFromContext() {
-		HttpServletResponse response = ((ServletWebRequest)RequestContextHolder.getRequestAttributes()).getResponse();
 		return new PowerResponse(response);
 	}
 	
